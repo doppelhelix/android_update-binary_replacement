@@ -13,10 +13,16 @@ ui_print() {
     shift;
   done;
 }
+
 # show_progress <amount> <time>
-show_progress() { echo "progress $1 $2" >> $OUTFD; }
+show_progress() {
+  echo "progress $1 $2" >> $OUTFD;
+}
+
 # set_progress <amount>
-set_progress() { echo "set_progress $1" >> $OUTFD; }
+set_progress() {
+  echo "set_progress $1" >> $OUTFD
+}
 
 # sleep <seconds> exists in shell
 
@@ -27,15 +33,26 @@ is_substring() {
     *) echo 0;;
   esac;
 }
+
 # less_than_int <x> <y>
-less_than_int() { test $1 -lt $2 && echo 1 || echo 0; }
+less_than_int() {
+  test $1 -lt $2 && echo 1 || echo 0;
+}
+
 # greater_than_int <x> <y>
-greater_than_int() { test $1 -gt $2 && echo 1 || echo 0; }
+greater_than_int() {
+  test $1 -gt $2 && echo 1 || echo 0;
+}
 
 # format(fs_type, partition_type, device, fs_size, mountpoint) {} is unneeded since specific format/wipe commands may be run directly
+
 # mount <partition> exists in shell
+
 # unmount <partition>
-unmount() { umount $1; }
+unmount() {
+  umount $1;
+}
+
 # is_mounted <partition>
 is_mounted() {
   case `mount` in
@@ -43,29 +60,49 @@ is_mounted() {
     *) echo 0;;
   esac;
 }
+
 # tune2fs(device[, arg, …]) {} should be done directly with the tune2fs command
 
 # write_raw_image <file> <block>
-write_raw_image() { dd if=$1 of=$2; }
+write_raw_image() {
+  dd if=$1 of=$2;
+}
+
 # write_firmware_image() {} is a manufacturer command to apply further OEM update zips with hboot/uboot functions, so can't be duplicated
+
 # wipe_block_device(block_dev, len) {} should be done directly with dd or nanderase
+
 # wipe_cache() {} should be done directly with format or rm -rf
 
 # package_extract_file <file> <destination_file>
-package_extract_file() { unzip -o "$ZIPFILE" "$1" -p > "$2"; }
+package_extract_file() {
+  unzip -o "$ZIPFILE" "$1" -p > "$2";
+}
+
 # package_extract_dir <dir> <destination_dir>
-package_extract_dir() { unzip -o "$ZIPFILE" "$1/*" -d "$2"; }
+package_extract_dir() {
+  unzip -o "$ZIPFILE" "$1/*" -d "$2";
+}
 
 # rename <file> <destination_file>
-rename() { mv -f $1 $2; }
+rename() {
+  mv -f $1 $2;
+}
 
 # delete <file> [<file2> ...]
-delete() { rm -f $*; }
+delete() {
+  rm -f $*;
+}
+
 # delete_recursive <dir> [<dir2> ...]
-delete_recursive() { rm -rf $*; }
+delete_recursive() {
+  rm -rf $*;
+}
 
 # symlink <file/dir> <link> [<link2> ...]
-symlink() { ln -s $*; }
+symlink() {
+  ln -s $*;
+}
 
 # set_metadata <file> <uid|gid|mode|capabilities|selabel> <value> [<uid|gid|mode|capabilities|selabel_2> <value2> ...]
 set_metadata() {
@@ -90,6 +127,7 @@ set_metadata() {
     shift 2;
   done;
 }
+
 # set_metadata_recursive <dir> <uid|gid|dmode|fmode|capabilities|selabel> <value> [<uid|gid|dmode|fmode|capabilities|selabel_2> <value2> ...]
 set_metadata_recursive() {
   dir="$1";
@@ -122,6 +160,7 @@ set_perm() {
   chown $uid.$gid $*; chown $uid:$gid $*;
   chmod $mod $*;
 }
+
 # set_perm_recursive <owner> <group> <dir_mode> <file_mode> <dir> [<dir2> ...]
 set_perm_recursive() {
   uid=$1; gid=$2; dmod=$3; fmod=$4;
@@ -145,6 +184,7 @@ ch_con() {
   chcon -h u:object_r:$con:s0 $*;
   chcon u:object_r:$con:s0 $*;
 }
+
 # ch_con_recursive <dir_context> <file_context> <dir> [<dir2> ...]
 ch_con_recursive() {
   dcon=$1; fcon=$2;
@@ -163,6 +203,7 @@ ch_con_recursive() {
     shift;
   done;
 }
+
 # restore_con <file/dir> [<file2/dir2> ...]
 restore_con() { 
   for i in /system/bin/toybox /system/toolbox /system/bin/toolbox; do
@@ -172,13 +213,20 @@ restore_con() {
 }
 
 # read_file(filename) {} is unneeded since file contents can be read directly with the cat command
+
 # concat(expr[, expr, ...]) {} is unneeded since string operations can be done directly
+
 # stdout(expr[, expr, ...]) {} is unneeded since all output goes to stdout by default
 
 # file_getprop <file> <property>
-file_getprop() { grep "^$2" "$1" | cut -d= -f2; }
+file_getprop() {
+  grep "^$2" "$1" | cut -d= -f2;
+}
+
 # getprop <property>
-getprop() { test -e /sbin/getprop && /sbin/getprop $1 || grep "^$1" /default.prop; }
+getprop() {
+  test -e /sbin/getprop && /sbin/getprop $1 || grep "^$1" /default.prop;
+}
 
 # sha1_check <file> [<sha1_hex> [<sha1_hex2> ...]]
 sha1_check() {
@@ -192,10 +240,12 @@ sha1_check() {
 apply_patch() {
   LD_LIBRARY_PATH=/system/lib applypatch $*;
 }
+
 # apply_patch_check <file> [<sha1_hex> [<sha1_hex2> ...]]
 apply_patch_check() {
   LD_LIBRARY_PATH=/system/lib applypatch -c $*;
 }
+
 # apply_patch_space <bytes>
 apply_patch_space() {
  LIBRARY_PATH=/system/lib applypatch -s $1;
@@ -204,7 +254,10 @@ apply_patch_space() {
 # run_program(program) {} is unneeded since programs may be run directly
 
 # abort [<message>]
-abort() { ui_print "$*"; exit 1; }
+abort() {
+  ui_print "$*"; exit 1;
+}
+
 # assert "<command>" ["<command2>"]
 assert() {
   until [ ! "$1" ]; do
@@ -221,6 +274,7 @@ backup_files() {
     shift;
   done;
 }
+
 # restore_files <file> [<file2> ...]
 restore_files() {
   until [ ! "$1" ]; do
