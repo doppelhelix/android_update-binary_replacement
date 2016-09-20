@@ -1,7 +1,7 @@
-# Complete Shell Script Flashable Zip EDIFY/update-binary Replacement
+# Complete EDIFY/update-binary Replacement
 *[by osm0sis @ xda-developers](http://forum.xda-developers.com/member.php?u=4544860)*
 
-makes flashable zips universal by not requiring a compiled update-binary
+makes flashable zips universal by using a shell script; thus not requiring a compiled update-binary.
 
 > for an extensive how to, please have a look at [forum.xda-developers.com](http://forum.xda-developers.com/android/software-hacking/dev-complete-shell-script-flashable-zip-t2934449 "Jump to the forum entry").
 
@@ -9,11 +9,14 @@ makes flashable zips universal by not requiring a compiled update-binary
 
 ```
 ui_print "<message>" ["<message 2>" ...]
+
 show_progress <amount> <time>
 set_progress <amount>
+
 sleep <seconds>
 
 is_substring <substring> <string>
+
 less_than_int <x> <y>
 greater_than_int <x> <y>
 
@@ -64,6 +67,9 @@ Contributions are welcome! For feature requests and bug reports please [submit a
 
 ### Release flow
 
-`develop -> staging -> master`
-1. All device/ROM independend work is done on branch `develop`and get pushed to `staging`. If No errors occur the code is ready to be merged into `master` 
-2. All device/ROM dependend work is done in new repositories.
+`develop -> master`
+
+1. All work is done on branch `develop`.
+2. If No errors occur the code is ready to be merged into `master`.
+
+**Note: To avoid clutter, code that executes functions is not allowed in this repository.**
