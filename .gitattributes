@@ -1,0 +1,12 @@
+# Force text filetypes to have unix eols, so Windows does not break them
+* text eol=lf
+
+# The above will handle all files NOT found below
+
+# These files are text and should be normalized (Convert crlf => lf)
+*.gitattributes text
+.gitignore text
+*.md text
+
+# Force the following to be handled as binaries
+*.apk binary
