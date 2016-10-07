@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Android update-binary replacement : Replace update-binary in flashable zips by a shell script">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Android update-binary replacement</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/doppelhelix/android_update-binary_replacement">View on GitHub</a>
+
+          <h1 id="project_title">Android update-binary replacement</h1>
+          <h2 id="project_tagline">Replace update-binary in flashable zips by a shell script</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/doppelhelix/android_update-binary_replacement/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/doppelhelix/android_update-binary_replacement/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h2>
+<a id="complete-edifyupdate-binary-replacement" class="anchor" href="#complete-edifyupdate-binary-replacement" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Complete EDIFY/update-binary Replacement</h2>
+
+<p><em><a href="http://forum.xda-developers.com/member.php?u=4544860">by osm0sis @ xda-developers</a></em></p>
+
+<p>makes flashable zips universal by using a shell script; thus not requiring a compiled update-binary.</p>
+
+<p><strong>For an extensive how to, please have a look at <a href="http://forum.xda-developers.com/android/software-hacking/dev-complete-shell-script-flashable-zip-t2934449" title="Jump to the forum entry">forum.xda-developers.com</a>.</strong></p>
+
+<h3>
+<a id="included-functions" class="anchor" href="#included-functions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Included Functions:</h3>
+
+<pre><code>ui_print "&lt;message&gt;" ["&lt;message 2&gt;" ...]
+
+show_progress &lt;amount&gt; &lt;time&gt;
+set_progress &lt;amount&gt;
+
+sleep &lt;seconds&gt;
+
+is_substring &lt;substring&gt; &lt;string&gt;
+
+less_than_int &lt;x&gt; &lt;y&gt;
+greater_than_int &lt;x&gt; &lt;y&gt;
+
+mount &lt;partition&gt;
+unmount &lt;partition&gt;
+is_mounted &lt;partition&gt;
+
+write_raw_image &lt;file&gt; &lt;block&gt;
+
+package_extract_file &lt;file&gt; &lt;destination_file&gt;
+package_extract_dir &lt;dir&gt; &lt;destination_dir&gt;
+
+rename &lt;file&gt; &lt;destination_file&gt;
+
+delete &lt;file&gt; [&lt;file2&gt; ...]
+delete_recursive &lt;dir&gt; [&lt;dir2&gt; ...]
+
+symlink &lt;file/dir&gt; &lt;link&gt; [&lt;link2&gt; ...]
+
+set_metadata &lt;file&gt; &lt;uid|gid|mode|capabilities|selabel&gt; &lt;value&gt; [&lt;uid|gid|mode|capabilities|selabel_2&gt; &lt;value2&gt; ...]
+set_metadata_recursive &lt;dir&gt; &lt;uid|gid|dmode|fmode|capabilities|selabel&gt; &lt;value&gt; [&lt;uid|gid|dmode|fmode|capabilities|selabel_2&gt; &lt;value2&gt; ...]
+
+set_perm &lt;owner&gt; &lt;group&gt; &lt;mode&gt; &lt;file&gt; [&lt;file2&gt; ...]
+set_perm_recursive &lt;owner&gt; &lt;group&gt; &lt;dir_mode&gt; &lt;file_mode&gt; &lt;dir&gt; [&lt;dir2&gt; ...]
+
+ch_con &lt;context&gt; &lt;file&gt; [&lt;file2&gt; ...]
+ch_con_recursive &lt;dir_context&gt; &lt;file_context&gt; &lt;dir&gt; [&lt;dir2&gt; ...]
+restore_con &lt;file/dir&gt; [&lt;file2/dir2&gt; ...]
+
+file_getprop &lt;file&gt; &lt;property&gt;
+getprop &lt;property&gt;
+
+sha1_check &lt;file&gt; [&lt;sha1_hex&gt; [&lt;sha1_hex2&gt; ...]]
+
+apply_patch &lt;src_file&gt; &lt;tgt_file&gt; &lt;tgt_sha1&gt; &lt;tgt_size&gt; [&lt;src_sha1_1&gt;:&lt;patch1&gt; [&lt;src_sha1_2&gt;:&lt;patch2&gt; ...]]
+apply_patch_check &lt;file&gt; [&lt;sha1_hex&gt; [&lt;sha1_hex2&gt; ...]]
+apply_patch_space &lt;bytes&gt;
+
+abort [&lt;message&gt;]
+assert "&lt;command&gt;" ["&lt;command2&gt;"]
+
+backup_files &lt;file&gt; [&lt;file2&gt; ...]
+restore_files &lt;file&gt; [&lt;file2&gt; ...]
+</code></pre>
+
+<h2>
+<a id="for-developers" class="anchor" href="#for-developers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>For Developers</h2>
+
+<p>Contributions are welcome! For feature requests and bug reports please <a href="https://github.com/doppelhelix/android_update-binary_replacement/issues/new">submit an issue</a> or get in touch on <a href="http://forum.xda-developers.com/android/software-hacking/dev-complete-shell-script-flashable-zip-t2934449" title="Jump to the forum entry">xda-developers</a>.</p>
+
+<h4>
+<a id="release-flow" class="anchor" href="#release-flow" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Release flow</h4>
+
+<p><code>develop -&gt; master</code></p>
+
+<ol>
+<li>All work is done on branch <code>develop</code>.</li>
+<li>If No errors occur the code is ready to be merged into <code>master</code>.</li>
+</ol>
+
+<p><strong>Note: To avoid clutter, code that executes functions is not allowed in this repository.</strong></p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Android update-binary replacement maintained by <a href="https://github.com/doppelhelix">doppelhelix</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
