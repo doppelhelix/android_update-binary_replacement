@@ -84,7 +84,23 @@ package_extract_file() {
 
 # package_extract_dir <dir> <destination_dir>
 package_extract_dir() {
-  unzip -o "$ZIPFILE" "$1/*" -d "$2";
+  leng=$((${#2}-1));
+  dest=$2;
+  if [ ${2:$leng:1} = / ]; then dest=${2:0:$leng}; fi;			# remove trailing /
+  ldiff=$((${#dest}-${#1}));						# Calculate length difference
+  case $dest in
+    *$1) unzip -o "$ZIPFILE" "$1/*" -d "${dest:0:${ldiff}}";;		#<destination_dir> ends with <dir>
+    *) dests=$(echo $dest | tr "/" "\n");
+    for dir in $dests
+    do
+      dirs="$dirs/$dir";
+      if [ ! -d "$dirs" ]; then mkdir "$dirs"; fi;			# Create all required dirs
+    done;
+    if [ ! -d "$dest/tmpunzip" ]; then mkdir "$dest/tmpunzip"; fi;	# Create temp dir
+    unzip -o "$ZIPFILE" "$1/*" -d "$dest/tmpunzip";
+    cp -rf "$dest/tmpunzip/$1/." "$dest";				# Copy to final destination
+    rm -rf "$dest/tmpunzip";;						# Remove temp dir
+  esac;
 }
 
 # rename <file> <destination_file>
