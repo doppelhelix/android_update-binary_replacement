@@ -89,6 +89,7 @@ package_extract_dir() {
 	leng=$((${#1}-1));
 	src=$1;
 	if [ ${1:$leng:1} = / ]; then src=${1:0:$leng}; fi;				# remove trailing /
+	if [ ${1:0:1} = / ]; then src=${src:1}; fi;					# remove starting /
 	leng=$((${#2}-1));
 	dest=$2;
 	if [ ${2:$leng:1} = / ]; then dest=${2:0:$leng}; fi;				# remove trailing /
