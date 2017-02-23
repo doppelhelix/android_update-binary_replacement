@@ -15,16 +15,18 @@ ui_print() {
 }
 
 # show_progress <amount> <time>
-# Amount should be a value between 0-100
+# Amount should be a value between 0.0-1.34 OR 0-100
 show_progress() {
-	amount=$(echo "0.0134 $1 * p" | dc);
-	echo "progress $amount $2" >> $OUTFD;
+  amount=$1;
+  if [ ! -z "${1##*[!0-9]*}" ]; then amount=$(echo "0.0134 $1 * p" | dc);
+  echo "progress $amount $2" >> $OUTFD;
 }
 # set_progress <amount>
-# Amount should be a value between 0-100
+# Amount should be a value between 0.0-1.34 OR 0-100
 set_progress() {
-	amount=$(echo "0.0134 $1 * p" | dc);
-	echo "set_progress $amount" >> $OUTFD;
+  amount=$1;
+  if [ ! -z "${1##*[!0-9]*}" ]; then amount=$(echo "0.0134 $1 * p" | dc);
+  echo "set_progress $amount" >> $OUTFD;
 }
 
 # sleep <seconds> exists in shell
