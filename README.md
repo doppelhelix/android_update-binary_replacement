@@ -58,6 +58,8 @@ apply_patch_space <bytes>
 abort [<message>]
 assert "<command>" ["<command2>"]
 
+choose <time> <command1> <command2> [<default>]
+
 backup_files <file> [<file2> ...]
 restore_files <file> [<file2> ...]
 ```
