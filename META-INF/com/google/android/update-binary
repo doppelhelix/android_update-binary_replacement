@@ -286,6 +286,29 @@ assert() {
   done;
 }
 
+# choose <time> <command1> <command2> [<default>]
+# <command1> will be run if <time> runs out, and is the default
+# If no <default> is provided ("-" or "+") vol- is the default
+keyinstall=0;
+choose() {
+  if [ $keyinstall -eq 0 ]; then
+    package_extract_file "files/keycheck" "/tmp/keycheck"
+    if [ -e /tmp/keycheck ]; then
+      chmod 777 /tmp/keycheck;
+      keyinstall=1;
+    fi;
+  fi;
+  ui_print "You have $1 seconds to press vol+/-";
+  key=42;					# vol+
+  if [ ${4:-0} = "+" ]; then key=21; fi;	# vol-
+  timeout -t $1 /tmp/keycheck;
+  if [[ $? -eq $key ]]; then
+    $3;
+  else
+    $2;
+  fi;
+}
+
 # backup_files <file> [<file2> ...]
 backup_files() {
   until [ ! "$1" ]; do
