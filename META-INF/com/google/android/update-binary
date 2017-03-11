@@ -81,26 +81,21 @@ write_raw_image() {
 
 # package_extract_file <file> <destination_file>
 package_extract_file() {
-  unzip -o "$ZIPFILE" "$1" -p > "$2";
+  mkdir -p "$(dirname "$2")";
+  unzip -o "$ZIPFILE" "$1" -p > "$2"; 
 }
 
 # package_extract_dir <dir> <destination_dir>
 package_extract_dir() {
-	leng=$((${#1}-1));
-	src=$1;
-	if [ ${1:$leng:1} = / ]; then src=${1:0:$leng}; fi;				# remove trailing /
-	if [ ${1:0:1} = / ]; then src=${src:1}; fi;					# remove starting /
-	leng=$((${#2}-1));
-	dest=$2;
-	if [ ${2:$leng:1} = / ]; then dest=${2:0:$leng}; fi;				# remove trailing /
-	ldiff=$((${#dest}-${#src}));							# Calculate length difference
-	case $dest in
-		*$src) unzip -o "$ZIPFILE" "$src/*" -d "${dest:0:${ldiff}}";;		# <dest_dir> ends with <dir>
-		*) if [ ! -d "$dest/tmpunzip" ]; then mkdir -p "$dest/tmpunzip"; fi;	# Create all required dirs
-		unzip -o "$ZIPFILE" "$src/*" -d "$dest/tmpunzip";
-		cp -rf "$dest/tmpunzip/$src/." "$dest";					# Copy to final destination
-		rm -rf "$dest/tmpunzip";;						# Remove temp dir
-	esac;
+  for entry in $(unzip -l $ZIPFILE "$1/*" 2>/dev/null | tail -n+4 | rev | cut -d" " -f1 | rev); do
+    if [ "$entry" != "-------" ]; then
+      outfile="$(echo "$entry" | cut -d/ -f2-)";
+      mkdir -p "$2/$(dirname "$outfile")";
+      unzip -o "$ZIPFILE" "$entry" -p > "$2/$outfile";
+    else
+      break;
+    fi;
+  done;
 }
 
 # rename <file> <destination_file>
