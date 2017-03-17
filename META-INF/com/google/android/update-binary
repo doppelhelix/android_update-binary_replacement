@@ -82,7 +82,7 @@ write_raw_image() {
 # package_extract_file <file> <destination_file>
 package_extract_file() {
   mkdir -p "$(dirname "$2")";
-  unzip -o "$ZIPFILE" "$1" -p > "$2"; 
+  unzip -o "$ZIPFILE" "$1" -p > "$2";
 }
 
 # package_extract_dir <dir> <destination_dir>
